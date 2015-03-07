@@ -1,5 +1,6 @@
 package uk.me.mungorae.loadinbackground;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -23,6 +24,7 @@ public class WebViewActivity extends ActionBarActivity {
 
     private Uri address;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,13 @@ public class WebViewActivity extends ActionBarActivity {
             }
         });
 
+        webView.getSettings().setJavaScriptEnabled(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         Intent intent = getIntent();
         address = intent.getData();
         if(address != null) {
@@ -80,6 +89,12 @@ public class WebViewActivity extends ActionBarActivity {
         super.onConfigurationChanged(newConfig);
 
         webView.reload();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
     @Override
