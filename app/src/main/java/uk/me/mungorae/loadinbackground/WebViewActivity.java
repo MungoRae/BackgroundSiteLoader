@@ -1,6 +1,7 @@
 package uk.me.mungorae.loadinbackground;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -68,5 +69,12 @@ public class WebViewActivity extends ActionBarActivity {
         }
 
         super.onBackPressed();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        webView.reload();
     }
 }
