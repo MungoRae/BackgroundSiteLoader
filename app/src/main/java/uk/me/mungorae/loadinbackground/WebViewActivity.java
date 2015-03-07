@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -18,6 +20,8 @@ import butterknife.InjectView;
 public class WebViewActivity extends ActionBarActivity {
     @InjectView(R.id.mr_web_view)
     WebView webView;
+
+    private Uri address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +56,9 @@ public class WebViewActivity extends ActionBarActivity {
         });
 
         Intent intent = getIntent();
-        Uri data = intent.getData();
-        if(data != null) {
-            webView.loadUrl(data.toString());
+        address = intent.getData();
+        if(address != null) {
+            webView.loadUrl(address.toString());
         }
         else {
             Toast.makeText(this, "Intent has no data", Toast.LENGTH_SHORT).show();
@@ -76,5 +80,30 @@ public class WebViewActivity extends ActionBarActivity {
         super.onConfigurationChanged(newConfig);
 
         webView.reload();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_web_view, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_open:
+                openUrlInAnotherBrowser();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openUrlInAnotherBrowser() {
+        Intent urlIntent = new Intent(Intent.ACTION_VIEW);
+        urlIntent.setData(address);
+
+        Intent chooserIntent = Intent.createChooser(urlIntent, "Choose Browser:");
+        startActivity(chooserIntent);
     }
 }
