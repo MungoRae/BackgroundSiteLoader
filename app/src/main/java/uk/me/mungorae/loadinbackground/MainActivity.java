@@ -25,16 +25,11 @@ public class MainActivity extends ActionBarActivity {
         introductionTextView.setText("Welcome to the test loading in background app.");
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.mr_test_button)
     public void onTestButtonClick(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("http://www.bbc.co.uk"));
-
-
-        Intent chooser = Intent.createChooser(intent, "Choose");
-        // Verify the original intent will resolve to at least one activity
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(chooser);
-        }
+        startActivity(intent);
     }
 }
