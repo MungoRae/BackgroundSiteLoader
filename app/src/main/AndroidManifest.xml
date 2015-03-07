@@ -17,21 +17,23 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".WebViewActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_web_view"
-            android:launchMode="singleInstance"
-            android:configChanges="orientation|screenSize">
+            android:launchMode="singleInstance" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="http" />
             </intent-filter>
         </activity>
+
+        <service android:name=".AsyncWebPageLoaderService" />
     </application>
 
 </manifest>
